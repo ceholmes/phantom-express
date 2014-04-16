@@ -6,13 +6,16 @@ var express = require('express');
 var routes = require('./routes');
 var http = require('http');
 var path = require('path');
+var exphbs = require('express3-handlebars');
 
 var app = express();
 
 // all environments
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'handlebars');
 
 app.use(express.json());
 app.use(express.urlencoded());
@@ -27,6 +30,12 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
+
+app.get('/render', function(request, response){
+    console.log(request.param('url'));
+    console.log(request.param('file'));
+    response.send(request.param('url'));
+});
 
 app.post('/', function(request, response){
   console.log(request.body);      // your JSON
