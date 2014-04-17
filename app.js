@@ -4,6 +4,7 @@
 
 var express = require('express');
 var routes = require('./routes');
+var render = require('./routes/render');
 var http = require('http');
 var path = require('path');
 var exphbs = require('express3-handlebars');
@@ -31,16 +32,8 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 
-app.get('/render', function(request, response){
-    console.log(request.param('url'));
-    console.log(request.param('file'));
-    response.send(request.param('url'));
-});
-
-app.post('/', function(request, response){
-  console.log(request.body);      // your JSON
-  response.send(request.body);    // echo the result back
-});
+app.get('/render/url', render.url);
+app.post('/render/html', render.html);
 
 
 http.createServer(app).listen(app.get('port'), function(){
