@@ -10,7 +10,6 @@ var bodyParser = require('body-parser');
 var handlebars = require('express3-handlebars');
 var routes = require('./routes');
 var render = require('./routes/render');
-var childProcess = require('child_process');
 
 // create app
 var app = express();
